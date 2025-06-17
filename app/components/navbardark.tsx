@@ -37,7 +37,7 @@ const LINK_PREVIEWS: Array<{ key: PreviewKey; content: React.ReactNode }> = [
 
 const SECTION_LIST = ["Section1", "Section2", "Photos", "Legal", "About"];
 
-export default function Nav() {
+export default function NavDark() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [shouldRender, setShouldRender] = useState(false);
@@ -121,9 +121,9 @@ export default function Nav() {
           onClick={toggleOverlay}
         />
         <NavLink
-          label="Dark Navbar Variant"
-          href="/dark-navbar"
-          isActive={pathname === "/randompage"}
+          label="Light Navbar Variant"
+          href="/"
+          isActive={pathname === "/dark-navbar"}
           onMouseEnter={() => setHoveredPreviewKey("test")}
           onMouseLeave={() => setHoveredPreviewKey(null)}
           onClick={toggleOverlay}
@@ -153,7 +153,7 @@ export default function Nav() {
           onClick={toggleOverlay}
         />
         <NavLink
-          label="Thing"
+          label="Other thing"
           href="/"
           isActive={pathname === "/randompage"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
@@ -271,36 +271,24 @@ export default function Nav() {
       ? LINK_PREVIEWS.find((s) => s.key === hoveredPreviewKey)?.content
       : null;
 
+  // Always keep burgerAnim state for open/close animation, but remove burgerColorState logic
   const [burgerAnim, setBurgerAnim] = useState(isOpen ? "open" : "");
-  const [burgerColorState, setBurgerColorState] = useState(
-    isOpen ? "black" : "white"
-  );
 
   useEffect(() => {
-    let colorTimeout: NodeJS.Timeout | null = null;
     if (isOpen) {
-      setBurgerColorState("black");
       const t = setTimeout(() => setBurgerAnim("open"), 10);
       return () => {
         clearTimeout(t);
-        if (colorTimeout) clearTimeout(colorTimeout);
       };
     } else {
       setBurgerAnim("");
-      colorTimeout = setTimeout(
-        () => setBurgerColorState("white"),
-        350
-      );
-      return () => {
-        if (colorTimeout) clearTimeout(colorTimeout);
-      };
     }
   }, [isOpen]);
 
   return (
     <>
       <button
-        className={`burger-btn${burgerAnim ? " open" : ""} burger-color-${burgerColorState}`}
+        className={`burger-btn${burgerAnim ? " open" : ""} burger-color-white`}
         onClick={toggleOverlay}
         aria-label={isOpen ? "Close menu" : "Open menu"}
         type="button"
@@ -349,7 +337,7 @@ export default function Nav() {
             </div>
           </div>
           <div
-            className="w-[50%] h-[100%] bg-white mr-0 ml-auto flex flex-col overflow-auto"
+            className="w-[50%] h-[100%] bg-black text-white mr-0 ml-auto flex flex-col overflow-auto"
             style={{
               position: "fixed",
               top: 0,
@@ -376,7 +364,7 @@ export default function Nav() {
                 style={{
                   position: "absolute",
                   borderRadius: "1.5rem",
-                  background: "black",
+                  background: "white",
                   transition:
                     "left 0.18s cubic-bezier(0.77,0,0.175,1), width 0.18s cubic-bezier(0.77,0,0.175,1), height 0.18s cubic-bezier(0.77,0,0.175,1), top 0.18s cubic-bezier(0.77,0,0.175,1), opacity 0.2s",
                   zIndex: 0,
@@ -401,10 +389,10 @@ export default function Nav() {
                     }}
                     className={`text-2xl font-bold px-4 py-2 rounded-full cursor-pointer ${
                       isActive
-                        ? "text-white"
+                        ? "text-black"
                         : isPending
                         ? "text-yellow-500"
-                        : "text-black hover:text-yellow-500"
+                        : "text-white hover:text-yellow-500"
                     }`}
                   >
                     {section}
@@ -432,7 +420,7 @@ export default function Nav() {
               </div>
             </div>
             <div className="w-[100%] flex items-center overflow-auto h-48 mt-auto mb-0 pl-16 gap-4">
-              <button className="text-2xl font-bold px-4 py-2 rounded-full cursor-pointer bg-black text-white">
+              <button className="text-2xl font-bold px-4 py-2 rounded-full cursor-pointer bg-white text-black">
                 Button
               </button>
             </div>
