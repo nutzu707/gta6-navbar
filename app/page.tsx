@@ -5,7 +5,11 @@ export default function Home() {
     <div className="w-full h-full">
       <img className="w-full h-full" src="/Jason_Duval_06.jpg"></img>
       <img className="w-full h-full" src="/DreQuan_Priest_03.webp"></img>
-
+      <img className="w-full h-full" src="/Jason_Duval_06.jpg"></img>
+      <img className="w-full h-full" src="/DreQuan_Priest_03.webp"></img>
+      <img className="w-full h-full" src="/Jason_Duval_06.jpg"></img>
+      <img className="w-full h-full" src="/DreQuan_Priest_03.webp"></img>
+      
       <Navbar />
     </div>
   );

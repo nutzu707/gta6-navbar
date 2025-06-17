@@ -114,7 +114,7 @@ export default function NavDark() {
       <div className="w-[100%] h-[100%] flex flex-col justify-center pl-16 text-7xl font-bold uppercase overflow-auto">
         <NavLink
           label="Home"
-          href="/"
+          href="/dark-navbar"
           isActive={pathname === "/"}
           onMouseEnter={() => setHoveredPreviewKey("home")}
           onMouseLeave={() => setHoveredPreviewKey(null)}
@@ -130,7 +130,7 @@ export default function NavDark() {
         />
         <NavLink
           label="Projects"
-          href="/"
+          href="/dark-navbar"
           isActive={pathname === "/randompage"}
           onMouseEnter={() => setHoveredPreviewKey("projects")}
           onMouseLeave={() => setHoveredPreviewKey(null)}
@@ -138,7 +138,7 @@ export default function NavDark() {
         />
         <NavLink
           label="About"
-          href="/"
+          href="/dark-navbar"
           isActive={pathname === "/randompage"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
           onMouseLeave={() => setHoveredPreviewKey(null)}
@@ -146,7 +146,7 @@ export default function NavDark() {
         />
         <NavLink
           label="Contact"
-          href="/"
+          href="/dark-navbar"
           isActive={pathname === "/randompage"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
           onMouseLeave={() => setHoveredPreviewKey(null)}
@@ -154,7 +154,7 @@ export default function NavDark() {
         />
         <NavLink
           label="Other thing"
-          href="/"
+          href="/dark-navbar"
           isActive={pathname === "/randompage"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
           onMouseLeave={() => setHoveredPreviewKey(null)}
@@ -180,7 +180,7 @@ export default function NavDark() {
         />
         <NavLink
           label="Test"
-          href="/"
+          href="/dark-navbar"
           isActive={pathname === "/randompage"}
           onMouseEnter={() => setHoveredPreviewKey("test")}
           onMouseLeave={() => setHoveredPreviewKey(null)}
@@ -188,7 +188,7 @@ export default function NavDark() {
         />
         <NavLink
           label="ajdjdaj"
-          href="/"
+          href="/dark-navbar"
           isActive={pathname === "/randompage"}
           onMouseEnter={() => setHoveredPreviewKey("projects")}
           onMouseLeave={() => setHoveredPreviewKey(null)}
@@ -196,7 +196,7 @@ export default function NavDark() {
         />
         <NavLink
           label="asdh"
-          href="/"
+          href="/dark-navbar"
           isActive={pathname === "/randompage"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
           onMouseLeave={() => setHoveredPreviewKey(null)}
@@ -204,7 +204,7 @@ export default function NavDark() {
         />
         <NavLink
           label="asgagag"
-          href="/"
+          href="/dark-navbar"
           isActive={pathname === "/randompage"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
           onMouseLeave={() => setHoveredPreviewKey(null)}
