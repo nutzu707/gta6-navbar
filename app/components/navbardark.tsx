@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, CSSProperties } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useNavbar } from "./navbar-context";
 
 type PreviewKey = "home" | "test" | "projects" | "none" | null;
 
@@ -38,15 +39,30 @@ const LINK_PREVIEWS: Array<{ key: PreviewKey; content: React.ReactNode }> = [
 const SECTION_LIST = ["Section1", "Section2", "Photos", "Legal", "About"];
 
 export default function NavDark() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
-  const [shouldRender, setShouldRender] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [hoveredPreviewKey, setHoveredPreviewKey] = useState<PreviewKey>(null);
+  const {
+    isOpen,
+    setIsOpen,
+    activeSection,
+    setActiveSection,
+    shouldRender,
+    setShouldRender,
+    isAnimating,
+    setIsAnimating,
+    hoveredPreviewKey,
+    setHoveredPreviewKey,
+    fadeKey,
+    setFadeKey,
+    contentVisible,
+    setContentVisible,
+    pendingSection,
+    setPendingSection,
+    burgerAnim,
+    setBurgerAnim,
+    burgerColorState,
+    setBurgerColorState,
+  } = useNavbar();
+
   const [indicatorStyle, setIndicatorStyle] = useState<CSSProperties>({});
-  const [fadeKey, setFadeKey] = useState(0);
-  const [contentVisible, setContentVisible] = useState(true);
-  const [pendingSection, setPendingSection] = useState<string | null>(null);
   const pathname = usePathname();
 
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -72,7 +88,7 @@ export default function NavDark() {
 
   const toggleOverlay = () => {
     if (!isOpen) setShouldRender(true);
-    setIsOpen((prev) => !prev);
+    setIsOpen(!isOpen);
     setIsAnimating(true);
   };
 
@@ -84,7 +100,7 @@ export default function NavDark() {
     setPendingSection(section);
     setTimeout(() => {
       setActiveSection(section);
-      setFadeKey((k) => k + 1);
+      setFadeKey(fadeKey + 1);
       setContentVisible(true);
       setTimeout(() => setPendingSection(null), INDICATOR_TRANSITION_MS);
     }, 0);
@@ -100,7 +116,7 @@ export default function NavDark() {
 
   useEffect(() => {
     if (isOpen) setActiveSection("Section1");
-  }, [isOpen]);
+  }, [isOpen, setActiveSection]);
 
   const handleAnimationEnd = () => {
     if (!isOpen) setShouldRender(false);
@@ -121,7 +137,7 @@ export default function NavDark() {
           onClick={toggleOverlay}
         />
         <NavLink
-          label="Light Navbar Variant"
+          label="Dark Navbar Variant"
           href="/"
           isActive={pathname === "/dark-navbar"}
           onMouseEnter={() => setHoveredPreviewKey("test")}
@@ -129,8 +145,8 @@ export default function NavDark() {
           onClick={toggleOverlay}
         />
         <NavLink
-          label="Projects"
-          href="/dark-navbar"
+          label="Light Navbar Variant"
+          href="/"
           isActive={pathname === "/randompage"}
           onMouseEnter={() => setHoveredPreviewKey("projects")}
           onMouseLeave={() => setHoveredPreviewKey(null)}
@@ -138,24 +154,24 @@ export default function NavDark() {
         />
         <NavLink
           label="About"
-          href="/dark-navbar"
-          isActive={pathname === "/randompage"}
+          href="/about"
+          isActive={pathname === "/about"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
           onMouseLeave={() => setHoveredPreviewKey(null)}
           onClick={toggleOverlay}
         />
         <NavLink
           label="Contact"
-          href="/dark-navbar"
-          isActive={pathname === "/randompage"}
+          href="/contact"
+          isActive={pathname === "/contact"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
           onMouseLeave={() => setHoveredPreviewKey(null)}
           onClick={toggleOverlay}
         />
         <NavLink
           label="Other thing"
-          href="/dark-navbar"
-          isActive={pathname === "/randompage"}
+          href="/thing"
+          isActive={pathname === "/thing"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
           onMouseLeave={() => setHoveredPreviewKey(null)}
           onClick={toggleOverlay}
@@ -271,9 +287,6 @@ export default function NavDark() {
       ? LINK_PREVIEWS.find((s) => s.key === hoveredPreviewKey)?.content
       : null;
 
-  // Always keep burgerAnim state for open/close animation, but remove burgerColorState logic
-  const [burgerAnim, setBurgerAnim] = useState(isOpen ? "open" : "");
-
   useEffect(() => {
     if (isOpen) {
       const t = setTimeout(() => setBurgerAnim("open"), 10);
@@ -283,7 +296,7 @@ export default function NavDark() {
     } else {
       setBurgerAnim("");
     }
-  }, [isOpen]);
+  }, [isOpen, setBurgerAnim]);
 
   return (
     <>

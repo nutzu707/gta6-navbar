@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, CSSProperties } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useNavbar } from "./navbar-context";
 
 type PreviewKey = "home" | "test" | "projects" | "none" | null;
 
@@ -38,15 +39,30 @@ const LINK_PREVIEWS: Array<{ key: PreviewKey; content: React.ReactNode }> = [
 const SECTION_LIST = ["Section1", "Section2", "Photos", "Legal", "About"];
 
 export default function Nav() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
-  const [shouldRender, setShouldRender] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [hoveredPreviewKey, setHoveredPreviewKey] = useState<PreviewKey>(null);
+  const {
+    isOpen,
+    setIsOpen,
+    activeSection,
+    setActiveSection,
+    shouldRender,
+    setShouldRender,
+    isAnimating,
+    setIsAnimating,
+    hoveredPreviewKey,
+    setHoveredPreviewKey,
+    fadeKey,
+    setFadeKey,
+    contentVisible,
+    setContentVisible,
+    pendingSection,
+    setPendingSection,
+    burgerAnim,
+    setBurgerAnim,
+    burgerColorState,
+    setBurgerColorState,
+  } = useNavbar();
+
   const [indicatorStyle, setIndicatorStyle] = useState<CSSProperties>({});
-  const [fadeKey, setFadeKey] = useState(0);
-  const [contentVisible, setContentVisible] = useState(true);
-  const [pendingSection, setPendingSection] = useState<string | null>(null);
   const pathname = usePathname();
 
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -72,7 +88,7 @@ export default function Nav() {
 
   const toggleOverlay = () => {
     if (!isOpen) setShouldRender(true);
-    setIsOpen((prev) => !prev);
+    setIsOpen(!isOpen);
     setIsAnimating(true);
   };
 
@@ -84,7 +100,7 @@ export default function Nav() {
     setPendingSection(section);
     setTimeout(() => {
       setActiveSection(section);
-      setFadeKey((k) => k + 1);
+      setFadeKey(fadeKey + 1);
       setContentVisible(true);
       setTimeout(() => setPendingSection(null), INDICATOR_TRANSITION_MS);
     }, 0);
@@ -100,13 +116,12 @@ export default function Nav() {
 
   useEffect(() => {
     if (isOpen) setActiveSection("Section1");
-  }, [isOpen]);
+  }, [isOpen, setActiveSection]);
 
   const handleAnimationEnd = () => {
     if (!isOpen) setShouldRender(false);
     setIsAnimating(false);
   };
-
 
   //each section has its own content (link to pages, images, custom content, etc.)
   const sectionContent: Record<string, React.ReactNode> = {
@@ -129,7 +144,7 @@ export default function Nav() {
           onClick={toggleOverlay}
         />
         <NavLink
-          label="Projects"
+          label="Light Navbar Variant"
           href="/"
           isActive={pathname === "/randompage"}
           onMouseEnter={() => setHoveredPreviewKey("projects")}
@@ -138,24 +153,24 @@ export default function Nav() {
         />
         <NavLink
           label="About"
-          href="/"
-          isActive={pathname === "/randompage"}
+          href="/about"
+          isActive={pathname === "/about"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
           onMouseLeave={() => setHoveredPreviewKey(null)}
           onClick={toggleOverlay}
         />
         <NavLink
           label="Contact"
-          href="/"
-          isActive={pathname === "/randompage"}
+          href="/contact"
+          isActive={pathname === "/contact"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
           onMouseLeave={() => setHoveredPreviewKey(null)}
           onClick={toggleOverlay}
         />
         <NavLink
           label="Thing"
-          href="/"
-          isActive={pathname === "/randompage"}
+          href="/thing"
+          isActive={pathname === "/thing"}
           onMouseEnter={() => setHoveredPreviewKey(null)}
           onMouseLeave={() => setHoveredPreviewKey(null)}
           onClick={toggleOverlay}
@@ -271,11 +286,6 @@ export default function Nav() {
       ? LINK_PREVIEWS.find((s) => s.key === hoveredPreviewKey)?.content
       : null;
 
-  const [burgerAnim, setBurgerAnim] = useState(isOpen ? "open" : "");
-  const [burgerColorState, setBurgerColorState] = useState(
-    isOpen ? "black" : "white"
-  );
-
   useEffect(() => {
     let colorTimeout: NodeJS.Timeout | null = null;
     if (isOpen) {
@@ -295,7 +305,7 @@ export default function Nav() {
         if (colorTimeout) clearTimeout(colorTimeout);
       };
     }
-  }, [isOpen]);
+  }, [isOpen, setBurgerAnim, setBurgerColorState]);
 
   return (
     <>

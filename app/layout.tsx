@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed } from "next/font/google";
 import "./globals.css";
+import NavbarSelector from "./components/navbar-selector";
+import { NavbarProvider } from "./components/navbar-context";
 
 const barlowCondensed = Barlow_Condensed({
   variable: "--font-barlow-condensed",
@@ -24,7 +26,10 @@ export default function RootLayout({
       <body
         className={`${barlowCondensed.variable} antialiased`}
       >
-        {children}
+        <NavbarProvider>
+          <NavbarSelector />
+          {children}
+        </NavbarProvider>
       </body>
     </html>
   );
