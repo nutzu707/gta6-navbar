@@ -41,7 +41,7 @@ export default function Darknavbar() {
           >
             GTA VI website
           </a>
-          . It's built to look and feel just like the real thing, it is very nicely animated and has a dark and light mode, but you can totally tweak it and drop it into your own projects however you want.
+          . It&apos;s built to look and feel just like the real thing, it is very nicely animated and has a dark and light mode, but you can totally tweak it and drop it into your own projects however you want.
         </p>
       </div>
     </div>
