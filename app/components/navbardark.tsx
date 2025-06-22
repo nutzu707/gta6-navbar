@@ -58,8 +58,6 @@ export default function NavDark() {
     setPendingSection,
     burgerAnim,
     setBurgerAnim,
-    burgerColorState,
-    setBurgerColorState,
   } = useNavbar();
 
   const [indicatorStyle, setIndicatorStyle] = useState<CSSProperties>({});
